@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سيف شوبينج | Saif Shopping</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<!-- ===== الهيدر ===== -->
+<header class="header">
+  <div class="header-top">
+    <nav class="nav">
+      <a href="#" class="nav-link active" data-i18n="home">الرئيسية</a>
+      <a href="#categories" class="nav-link" data-i18n="categories">الفئات</a>
+      <a href="#about" class="nav-link" data-i18n="about">من نحن</a>
+      <a href="#contact" class="nav-link" data-i18n="contact">تواصل معنا</a>
+    </nav>
+    <a href="#" class="logo">
+      <img src="assets/logo.png" alt="Saif Shopping">
+    </a>
+    <div class="header-actions">
+      <div class="search-box">
+        <input type="text" id="searchInput" data-i18n-ph="search" placeholder="ابحث عن منتج...">
+        <span class="search-icon">🔍</span>
+      </div>
+      <button class="icon-btn" id="loginBtn" title="Login">👤</button>
+      <button class="icon-btn cart-btn" id="cartBtn" title="Cart">🛒<span class="cart-count" id="cartCount">0</span></button>
+      <button class="lang-btn" id="langBtn">EN</button>
+    </div>
+  </div>
+
+  <!-- شريط الفئات -->
+  <div class="cat-bar" id="catBar">
+    <button class="cat-chip active" data-cat="all" data-i18n="all">الكل</button>
+  </div>
+</header>
+
+<!-- ===== الهيرو ===== -->
+<section class="hero">
+  <h1 data-i18n="slogan_ar">قمه للصل حبر اللذن وعلى شوبينج</h1>
+  <h2 class="hero-sub" data-i18n="slogan_en">MODERN TRENDS, LIGHT SHOPPING</h2>
+</section>
+
+<!-- ===== المنتجات ===== -->
+<main class="container">
+  <div class="grid" id="productsGrid"></div>
+</main>
+
+<!-- ===== الفوتر ===== -->
+<footer class="footer">
+  <div class="footer-links">
+    <a href="#about" data-i18n="about">من نحن</a>
+    <a href="#" data-i18n="faq">الأسئلة الشائعة</a>
+    <a href="#" data-i18n="privacy">سياسة الخصوصية</a>
+  </div>
+  <a href="#" class="insta-icon" id="instaLink" target="_blank" title="Instagram">
+    <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+  </a>
+  <p class="copy">© Saif Shopping</p>
+</footer>
+
+<!-- زر واتساب عائم -->
+<a href="#" id="floatWa" class="float-wa" target="_blank" title="WhatsApp">
+  <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.6.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.6-1.3.1-.2 0-.4 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4 5.2 5.2 0 0 0 3.2.7 2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.6-.3z"/></svg>
+  <span data-i18n="contact_us">تواصل معنا</span>
+</a>
+
+<!-- ===== مودال تسجيل الدخول / إنشاء حساب ===== -->
+<div class="modal" id="authModal">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal('authModal')">✕</button>
+    <h3 data-i18n="login">تسجيل الدخول</h3>
+    <input type="text" id="authName" data-i18n-ph="name" placeholder="الاسم الكامل">
+    <input type="tel" id="authPhone" data-i18n-ph="phone" placeholder="رقم الهاتف">
+    <input type="email" id="authEmail" data-i18n-ph="email" placeholder="البريد الإلكتروني (Gmail)">
+    <p class="err" id="authErr"></p>
+    <button class="btn-primary" id="authSubmit" data-i18n="login">تسجيل الدخول</button>
+    <p class="switch-auth" id="switchAuth"></p>
+  </div>
+</div>
+
+<!-- ===== مودال عربة التسوق ===== -->
+<div class="modal" id="cartModal">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal('cartModal')">✕</button>
+    <h3 data-i18n="cart">🛒 عربة التسوق</h3>
+    <div id="cartItems"></div>
+    <div class="cart-total"><span data-i18n="total">المجموع</span>: $<span id="cartTotal">0</span></div>
+    <a href="#" class="btn-wa-full" id="cartWaBtn" target="_blank">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm4.6 12.1a2.7 2.7 0 0 1-1.8 1.3 5.2 5.2 0 0 1-3.2-.7 11.8 11.8 0 0 1-4.5-4 5.2 5.2 0 0 1-1.1-2.7 3 3 0 0 1 .9-2.2 1 1 0 0 1 .7-.3h.5c.2 0 .4-.1.6.4l.8 1.9c.1.2.1.4 0 .5-.4.9-.8.9-.6 1.3a6.7 6.7 0 0 0 3.3 2.9c.3.1.5 0 .6-.1s.5-.8.8-1 .4-.2.6-.1 1.4.7 1.7.8c.3.1.5.2.6.3a2.2 2.2 0 0 1-.2 1.3z"/></svg>
+      <span data-i18n="send_order">إرسال الطلب عبر واتساب</span>
+    </a>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة تحكم سيف شوبينج</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="header"><div class="header-top" style="justify-content:center">
+  <a href="../index.html" class="logo"><img src="../assets/logo.png" alt="logo"></a>
+</div></header>
+
+<!-- شاشة الدخول -->
+<div class="login-card" id="loginCard">
+  <img src="../assets/logo.png" alt="logo">
+  <h3>🔐 لوحة تحكم الأدمن</h3>
+  <input type="text" id="admUser" placeholder="اسم المستخدم">
+  <input type="password" id="admPass" placeholder="كلمة المرور">
+  <p class="err" id="admErr"></p>
+  <button class="btn-save" onclick="adminLogin()">دخول</button>
+  <p style="text-align:center;font-size:12px;color:#7d8a8a">الحساب الافتراضي: admin / saif1234 — غيّره فوراً من الإعدادات</p>
+</div>
+
+<!-- اللوحة -->
+<div class="admin-wrap" id="adminPanel" style="display:none">
+  <div class="admin-head">
+    <h2 style="color:var(--teal)">⚙️ لوحة التحكم</h2>
+    <div style="display:flex;gap:8px">
+      <a href="../index.html" class="admin-tab">🛍️ عرض الموقع</a>
+      <button class="btn-danger" onclick="adminLogout()">خروج</button>
+    </div>
+  </div>
+  <div class="admin-tabs">
+    <button class="admin-tab active" onclick="showTab('products',this)">🛍️ المنتجات</button>
+    <button class="admin-tab" onclick="showTab('cats',this)">🗂️ الفئات</button>
+    <button class="admin-tab" onclick="showTab('settings',this)">⚙️ الإعدادات</button>
+  </div>
+
+  <!-- المنتجات -->
+  <div class="admin-panel active" id="tab-products">
+    <h3>➕ إضافة منتج جديد</h3>
+    <div class="form-grid">
+      <input type="text" id="pNameAr" placeholder="اسم المنتج بالعربي *">
+      <input type="text" id="pNameEn" placeholder="Product name (English)">
+      <input type="number" id="pPrice" placeholder="السعر ($) *" min="0" step="0.01">
+      <select id="pCat"><option value="">اختر الفئة *</option></select>
+      <div class="full">
+        <label style="display:block;margin-bottom:6px;font-size:13px;color:#7d8a8a">صورة المنتج * ( JPG / PNG )</label>
+        <input type="file" id="pImg" accept="image/*" onchange="previewImg(this)">
+        <img id="imgPreview" class="img-preview" style="margin-top:8px">
+      </div>
+    </div>
+    <button class="btn-save" style="margin-top:14px" onclick="addProduct()">💾 حفظ المنتج</button>
+    <h3 style="margin-top:26px">📦 المنتجات الحالية</h3>
+    <table class="admin-table"><thead><tr><th>الصورة</th><th>الاسم</th><th>السعر</th><th>الفئة</th><th></th></tr></thead>
+    <tbody id="prodTable"></tbody></table>
+  </div>
+
+  <!-- الفئات -->
+  <div class="admin-panel" id="tab-cats">
+    <h3>➕ إضافة فئة</h3>
+    <div class="form-grid">
+      <input type="text" id="cNameAr" placeholder="اسم الفئة بالعربي *">
+      <input type="text" id="cNameEn" placeholder="Category name (English)">
+    </div>
+    <button class="btn-save" style="margin-top:12px" onclick="addCategory()">💾 حفظ الفئة</button>
+    <table class="admin-table"><thead><tr><th>الفئة</th><th>عدد المنتجات</th><th></th></tr></thead>
+    <tbody id="catTable"></tbody></table>
+  </div>
+
+  <!-- الإعدادات -->
+  <div class="admin-panel" id="tab-settings">
+    <h3>⚙️ إعدادات الموقع</h3>
+    <div class="form-grid">
+      <div><label style="font-size:13px;color:#7d8a8a">رقم الواتساب (بصيغة دولية بدون +)</label>
+      <input type="text" id="sWa" placeholder="96279XXXXXXX"></div>
+      <div><label style="font-size:13px;color:#7d8a8a">رابط صفحة انستغرام</label>
+      <input type="url" id="sInsta" placeholder="https://instagram.com/..."></div>
+      <div><label style="font-size:13px;color:#7d8a8a">اسم مستخدم الأدمن</label>
+      <input type="text" id="sUser"></div>
+      <div><label style="font-size:13px;color:#7d8a8a">كلمة مرور الأدمن</label>
+      <input type="text" id="sPass"></div>
+    </div>
+    <button class="btn-save" style="margin-top:14px" onclick="saveSettings()">💾 حفظ الإعدادات</button>
+    <p style="margin-top:14px;font-size:12px;color:#7d8a8a">⚠️ البيانات محفوظة في متصفح هذا الجهاز. عند نقل الاستضافة صدّر نسخة احتياطية (زر بالأسفل) والصقها في الجهاز الجديد.</p>
+    <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap">
+      <button class="admin-tab" onclick="exportDB()">📤 تصدير نسخة احتياطية</button>
+      <button class="admin-tab" onclick="document.getElementById('importFile').click()">📥 استيراد نسخة</button>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importDB(this)">
+      <button class="btn-danger" onclick="resetAll()">🗑️ إعادة تعيين كامل</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script src="admin.js"></script>
+</body>
+</html>
